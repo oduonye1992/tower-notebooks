@@ -1,8 +1,8 @@
-# Tower notebooks
+# IQ Options notebooks
 
-This repository contains the output-free Jupyter notebooks from Tower's exploratory research.
+This repository contains output-free Jupyter notebooks for exploring IQ Option OTC data and testing simple strategies.
 
-Tower is the TypeScript Chrome extension and Node.js CLI in the [main repository](https://github.com/oduonye1992/tower). The supporting Python scripts live in the [tower-python repository](https://github.com/oduonye1992/tower-python).
+The companion [IQ Options trading bot](https://github.com/oduonye1992/iq-options-trading-bot) collects the candle data used by these notebooks.
 
 ## Safety and privacy
 
@@ -12,10 +12,26 @@ Outputs, credentials, account details, screenshots, databases, and model files a
 
 ## Use
 
-Create a Python environment using the [tower-python setup](https://github.com/oduonye1992/tower-python#setup), then open a notebook in Jupyter:
+Install [uv](https://docs.astral.sh/uv/) and run:
 
 ~~~bash
-jupyter lab
+uv sync
+uv run jupyter lab
 ~~~
 
-The notebooks are intentionally kept exploratory and are not presented as production software or evidence of a reliable market edge.
+The notebooks look in `data/` by default. To analyze data collected by the companion bot, point `IQ_OPTIONS_DATA_DIR` at that bot's data directory:
+
+~~~bash
+IQ_OPTIONS_DATA_DIR=/path/to/iq-options-trading-bot/data uv run jupyter lab
+~~~
+
+## Docker
+
+~~~bash
+docker build -t iq-options-notebooks .
+docker run --rm -it -p 8888:8888 \
+  -v "$PWD/data:/workspace/data" \
+  iq-options-notebooks
+~~~
+
+These notebooks are research artifacts, not financial advice or a trading system. Their results should not be treated as evidence of a reliable market edge.
